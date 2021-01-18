@@ -2,6 +2,7 @@
 Object-Oriented exploration of node-based data structures and their implementations.  Worked on during the winter between 2020 and 2021.
 
 ## Contents:
+### Data Structures
 * Nodes
   * Single Nodes
   * Binary Nodes
