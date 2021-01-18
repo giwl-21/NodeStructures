@@ -21,5 +21,5 @@ Object-Oriented exploration of node-based data structures and their implementati
 * Depth First Traversal
   * Pre-order, Post-order, In-order for Binary Tree
 * Breadth First Traversal
-* Pathfinding:
-  * Dijkstra's Algorithm
+* Dijkstra's Algorithm
+  * For weighted graph pathfinding
