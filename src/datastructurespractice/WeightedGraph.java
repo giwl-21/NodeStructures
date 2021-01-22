@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * A graph with nodes that are connected through one-way edges.
@@ -267,19 +268,27 @@ public class WeightedGraph<V> extends Graph<WeightedMapNode<V>, V>{
     @Override
     public ArrayList<V> dft(){
         // Use list1.addAll(list2) for the lists
-        return dft(root);
+        HashSet<V> visited = new HashSet<>();
+        return dft(root, visited);
     }
     
-    private ArrayList<V> dft(WeightedMapNode<V> node){
+    /**
+     * Need to create a visited array to prevent repeats
+     * @param node
+     * @return traversal list
+     */
+    private ArrayList<V> dft(WeightedMapNode<V> node, HashSet<V> visited){
         ArrayList<V> traversal = new ArrayList<>();
         traversal.add(node.value());
+        visited.add(node.value());
         if (node.childrenCount() > 0){
             for (int i = 0; i < node.childrenCount(); i++){
-                if (!traversal.contains(node.getChild(i).value())){
+                if (!visited.contains(node.getChild(i).value())){
                     // Inefficient search???
                     // Call-stack order issue with checking? Yep
-                    traversal.addAll(dft(node.getChild(i)));
+                    traversal.addAll(dft(node.getChild(i), visited));
                 }
+                
             }
             return traversal;
         }
@@ -291,11 +300,28 @@ public class WeightedGraph<V> extends Graph<WeightedMapNode<V>, V>{
     
     /**
      * Breadth first traversal through the graph, starting at the root.
+     * Also uses a visited array.
      * @return a list of the values that were traversed
      */
     @Override
     public ArrayList<V> bft(){
-        return new ArrayList<>();
+        ArrayList<V> traversal = new ArrayList<>();
+        Queue<WeightedMapNode<V>> childQueue = new Queue<>();
+        childQueue.enqueue(root);
+        WeightedMapNode<V> currentNode;
+        HashSet<V> visited = new HashSet<>();
+        
+        while(childQueue.peek() != null){
+            currentNode = childQueue.remove();
+            if (!visited.contains(currentNode.value())){
+                traversal.add(currentNode.value());
+                visited.add(currentNode.value());
+                for(int i = 0; i < currentNode.childrenCount(); i++){
+                    childQueue.enqueue(currentNode.getChild(i));
+                }
+            }
+        }
+        return traversal;
     }
     
     @Override
