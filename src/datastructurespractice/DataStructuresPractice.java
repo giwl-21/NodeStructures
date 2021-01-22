@@ -35,6 +35,7 @@ public class DataStructuresPractice {
         print(wg.get("E").childrenCount());
         print(wg.pathToNode(wg.get("A"), wg.get("F")));
         print(wg.dft());
+        print(wg.bft());
     }
     
     public static void bstTest(){
